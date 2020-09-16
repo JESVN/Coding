@@ -4,9 +4,9 @@
 /// </summary>
 public class MFrame : MonoBehaviour
 {
-    [Range(1,100)][SerializeField]private int _interval=1;//帧间隔
+    [Range(1,100)][Header("帧间隔")][SerializeField]private int _interval=1;//帧间隔
     private int[] _frames;//保持每一帧操作不一致
-    
+    [Header("是否输出")][SerializeField]private bool IsDeug=true;
     //如：
     //1. _interval=3，则Time.frameCount % _interval表示每3帧执行一次相应的操作，
     //2. Time.frameCount % _interval=0和Time.frameCount % _interval=1是不同的帧，
@@ -24,21 +24,24 @@ public class MFrame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.frameCount % _interval==Get_frames(0))
+        if (IsDeug)
         {
-            Debug.Log($"第{Get_frames(0)}帧输出");   
-        }
-        if (Time.frameCount % _interval==Get_frames(1))
-        {
-            Debug.Log($"第{Get_frames(1)}帧输出");   
-        }
-        if (Time.frameCount % _interval==Get_frames(2))
-        {
-            Debug.Log($"第{Get_frames(2)}帧输出");   
-        }
-        if (Time.frameCount % _interval==Get_frames(3))
-        {
-            Debug.Log($"第{Get_frames(3)}帧输出");   
+            if (Time.frameCount % _interval==Get_frames(0))
+            {
+                Debug.Log($"第{Get_frames(0)}帧输出");   
+            }
+            if (Time.frameCount % _interval==Get_frames(1))
+            {
+                Debug.Log($"第{Get_frames(1)}帧输出");   
+            }
+            if (Time.frameCount % _interval==Get_frames(2))
+            {
+                Debug.Log($"第{Get_frames(2)}帧输出");   
+            }
+            if (Time.frameCount % _interval==Get_frames(3))
+            {
+                Debug.Log($"第{Get_frames(3)}帧输出");   
+            }
         }
     }
     private int Get_frames(int index)
