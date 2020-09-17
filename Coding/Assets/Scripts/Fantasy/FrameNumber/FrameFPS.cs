@@ -23,6 +23,7 @@ public class FrameFPS : MonoBehaviour
     {
         Style.fontSize = 30;
         Style.normal.textColor = Color.green;
+        Style.alignment = TextAnchor.UpperCenter;
     }
 
     // Use this for initialization  
@@ -58,7 +59,7 @@ public class FrameFPS : MonoBehaviour
     {
         if (IsFps)
         {
-            GUI.Label(new Rect(Screen.width / 2, 0, 300, 300), IsDecimals?m_FPS.ToString("f2")+ "FPS":m_FPS.ToString("f0") + "FPS", Style);
+            GUI.Label(new Rect(Screen.width / 2,0,0,0), IsDecimals?m_FPS.ToString("f2")+ "FPS":m_FPS.ToString("f0") + "FPS", Style);
         }
     }
 }
