@@ -31,7 +31,7 @@ public class LookAt_ScreenToWord : MonoBehaviour
     void OnGUI()
     {
         //自行编写水平居中代码
-        //如：1.  _width/2-(_style.fontSize*_guiContent.text.Length)/2   即：当前选择宽度/2-(字体大小*内容长度)/2
+        //如：1.  _width/2-(_style.fontSize*_guiContent.text.Length)/2   公式为：当前选择宽度/2-(字体大小*内容长度)/2
         GUI.Label(new Rect( Screen.width/2,_heigh,0,0),_guiContent,_style);
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
