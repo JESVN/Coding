@@ -26,13 +26,25 @@ public class LookAt_ScreenToWord : MonoBehaviour
     {
         var lookAtVec = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,transform.position.z));
         transform.LookAt(lookAtVec,Vector3.forward);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _style.alignment = TextAnchor.UpperCenter;
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            _style.alignment = TextAnchor.UpperLeft;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _style.alignment = TextAnchor.UpperRight;
+        }
     }
 
     void OnGUI()
     {
         //自行编写水平居中代码
         //如：1.  _width/2-(_style.fontSize*_guiContent.text.Length)/2   公式为：当前选择宽度/2-(字体大小*内容长度)/2
-        GUI.Label(new Rect( Screen.width/2,_heigh,0,0),_guiContent,_style);
+        GUI.Label(new Rect( _width/2,_heigh,0,0),_guiContent,_style);
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             //鼠标是屏幕坐标，所有要转成世界坐标，此时分为两种情况：
