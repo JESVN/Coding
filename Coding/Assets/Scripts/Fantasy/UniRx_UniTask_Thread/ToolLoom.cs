@@ -8,7 +8,6 @@ public class ToolLoom : MonoBehaviour
     public static int maxThreads = 8;
     static int numThreads;
     private static ToolLoom _current;
-    private int _count;
     public static ToolLoom Current
     {
         get

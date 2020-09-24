@@ -2,14 +2,18 @@
 
 public class IssueRemoveLog : MonoBehaviour
 {
+    public bool _isLog;
+
     void Awake()
     {
-        if (GlobalLog.Instance)
-            Destroy(gameObject);
+        if (FindObjectOfType<GlobalLog>()==null)
+        {
+            GlobalLog.Instance.Init(_isLog);
+        }
     }
 }
 
-public class GlobalLog :MonoBehaviour
+public class GlobalLog : MonoBehaviour
 {
     public static GlobalLog Instance;
     static GlobalLog()
@@ -18,11 +22,12 @@ public class GlobalLog :MonoBehaviour
         DontDestroyOnLoad(go);
         Instance = go.AddComponent<GlobalLog>();
     }
-    void Awake()
+    public void Init(bool IsLog)
     {
 #if !UNITY_EDITOR
         Debug.unityLogger.logEnabled = false;
+#else
+        Debug.unityLogger.logEnabled = IsLog;
 #endif
-        Debug.Log($"{Debug.unityLogger.logEnabled }");
     }
 }

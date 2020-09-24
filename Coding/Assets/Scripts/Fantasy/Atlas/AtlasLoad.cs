@@ -39,16 +39,17 @@ public class AtlasLoad : MonoBehaviour
         {
             LoadMethod("Assets/Resources/1LoadingPage/", "*.jpg", "*.png");
         }
-
-        ;
+        
         if (GUI.Button(new Rect(Screen.width / 2 - 150 / 2 + 100, 0, 150, 100), "图集加载"))
         {
             AtlasLoadMethod("Assets/Resources/Atlas/PngAtlas.spriteatlas");
         }
+        
         if (GUI.Button(new Rect(Screen.width / 2 - 150 / 2 + 300, 0, 150, 100), "重新加载场景"))
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
+        
         GUI.Label(new Rect(Screen.width / 2 - 800, 0, 0, 0), _aggregateProgressText + _aggregateProgress, _style);
         GUI.Label(new Rect(Screen.width / 2 - 450, 0, 0, 0), atFile + _fileProgress, _style);
     }

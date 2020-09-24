@@ -25,7 +25,7 @@ public class Manager : MonoBehaviour
     }
     void OnGUI()
     {
-        GUI.Label(new Rect(Screen.width / 2-600, 0, 300, 300), _message, _style);
+        GUI.Label(new Rect(Screen.width / 2-400, 0, 300, 300), _message, _style);
         if (GUI.Button(new Rect(50, 50, 150, 70), "StandardUpdate"))
         {
             _message = "标准Update执行";

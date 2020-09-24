@@ -1,20 +1,18 @@
 ﻿using UnityEditor;
 using UnityEngine;
-
-public class Log : EditorWindow
+public class Log : Editor
 {
     /// <summary>
     /// 拓展Hierarchy右键
     /// </summary>
-    [MenuItem("GameObject/Log", priority = -1)]
+    [MenuItem("GameObject/Log", false,0)]
     public static void ExpandLog()
     {
-        if (GameObject.Find("[issue]RemoveLog"))
+        if (FindObjectOfType<IssueRemoveLog>())
             return;
         GameObject log = new GameObject("[issue]RemoveLog");
         log.AddComponent<IssueRemoveLog>();
     }
-
     #region 重写Hierarchy右键
 
     // /// <summary>
