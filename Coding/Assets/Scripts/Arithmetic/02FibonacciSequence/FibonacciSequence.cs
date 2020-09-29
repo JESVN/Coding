@@ -38,4 +38,22 @@ public class FibonacciSequence : MonoBehaviour
             }
         }
     }
+    
+    private long  CalculateRecursion(long  n)
+    {
+        if (n == 1 || n == 2)
+        {
+            return 1;
+        }
+        else if (n > 2)
+        {
+            long a = CalculateRecursion(n - 1);
+            long b = CalculateRecursion(n - 2);
+            return a + b;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }
