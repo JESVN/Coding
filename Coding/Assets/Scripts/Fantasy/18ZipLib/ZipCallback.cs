@@ -368,12 +368,14 @@
 // }
 
 #endregion
+
 using System;
 using System.IO;
 using ICSharpCode.SharpZipLib.Checksum;
 using ICSharpCode.SharpZipLib.Zip;
 using UnityEngine;
 using UnityEngine.UI;
+
 namespace Updatezip
 {
     #region 压缩文件类
@@ -388,9 +390,11 @@ namespace Updatezip
             //如果文件没有找到，则报错   
             if (!File.Exists(FileToZip))
             {
-                throw new System.IO.FileNotFoundException("The specified file " + FileToZip + "could not be found. Zipping aborderd");
+                throw new System.IO.FileNotFoundException("The specified file " + FileToZip +
+                                                          "could not be found. Zipping aborderd");
             }
-            var StreamToZip =new FileStream(FileToZip, FileMode.Open, FileAccess.Read);
+
+            var StreamToZip = new FileStream(FileToZip, FileMode.Open, FileAccess.Read);
             var ZipFile = File.Create(ZipedFile);
             var ZipStream = new ZipOutputStream(ZipFile);
             var ZipEntry = new ZipEntry("ZippedFile");
@@ -418,9 +422,10 @@ namespace Updatezip
             StreamToZip.Close();
         }
 
-        public void ZipFileMain(string[] args,Slider progress,Text message)
+        public void ZipFileMain(string[] args, Slider progress, Text message, Text pro, int buuferSize = 1024)
         {
             #region 判断路径是文件还是目录
+
             string[] filenames;
             if (Directory.Exists(args[0]))
             {
@@ -430,7 +435,7 @@ namespace Updatezip
             else
             {
                 //file
-                filenames = new string[1]{args[0]};
+                filenames = new string[1] {args[0]};
             }
 
             #endregion
@@ -439,14 +444,20 @@ namespace Updatezip
             Crc32 Crc = new Crc32();
             ZipOutputStream s = new ZipOutputStream(File.Create(args[1]));
             s.SetLevel(6); // 0 - store only to 9 - means best compression  
+            pro.text = "0%";
             ToolLoom.RunAsync(() =>
             {
                 int offset = 0;
-                int count = 100;
+                int count = buuferSize;
                 while (true)
                 {
                     FileStream fs = File.OpenRead(filenames[index]);
                     byte[] buffer = new byte[fs.Length];
+                    ToolLoom.QueueOnMainThread(() =>
+                    {
+                        progress.value = 0;
+                        message.text = "读取中";
+                    });
                     while (true)
                     {
                         if (buffer.Length <= count)
@@ -465,9 +476,13 @@ namespace Updatezip
                                 fs.Read(buffer, offset, buffer.Length - offset);
                                 break;
                             }
+
                             offset += count;
+                            float value = Convert.ToSingle((offset * 1f / buffer.Length * 1f).ToString("f2"));
+                            ToolLoom.QueueOnMainThread(() => { progress.value = value; });
                         }
                     }
+
                     offset = 0;
                     ZipEntry entry = new ZipEntry(filenames[index]);
                     entry.DateTime = DateTime.Now;
@@ -483,6 +498,11 @@ namespace Updatezip
                     Crc.Update(buffer);
                     entry.Crc = Crc.Value;
                     s.PutNextEntry(entry);
+                    ToolLoom.QueueOnMainThread(() =>
+                    {
+                        progress.value = 0;
+                        message.text = "压缩中";
+                    });
                     while (true)
                     {
                         if (buffer.Length <= count)
@@ -501,68 +521,101 @@ namespace Updatezip
                                 s.Write(buffer, offset, buffer.Length - offset);
                                 break;
                             }
+
                             offset += count;
                         }
-                        float pro=index+Convert.ToSingle((offset*1f/ buffer.Length*1f).ToString("f2"));
-                        float value = (pro / filenames.Length);
-                        ToolLoom.QueueOnMainThread(() =>
-                        {
-                            progress.value = value;
-                        });
+
+                        float value = Convert.ToSingle((offset * 1f / buffer.Length * 1f).ToString("f2"));
+                        ToolLoom.QueueOnMainThread(() => { progress.value = value; });
                     }
+
                     offset = 0;
                     index++;
+                    ToolLoom.QueueOnMainThread(() =>
+                    {
+                        pro.text = ((index * 1f / filenames.Length * 1f) * 100f).ToString("f1") + "%";
+                    });
                     if (index == filenames.Length)
                         break;
                 }
+
                 s.Finish();
                 s.Close();
                 ToolLoom.QueueOnMainThread(() =>
                 {
+                    progress.value = 1;
                     message.text = "压缩完成";
                 });
-                Debug.Log($"{"压缩完成"}"); 
+                Debug.Log($"{"压缩完成"}");
             });
         }
     }
+
     #region 解压文件类
+
     /// <summary>
     ///  解压文件
     /// </summary>
     public class UnZipClass
     {
-        public void UnZip(string[] args)
+        public void UnZip(string[] args, Slider progress, Text message, Text pro, int bufferSize = 1024)
         {
             ZipInputStream s = new ZipInputStream(File.OpenRead(args[0]));
             ZipEntry theEntry;
-            while ((theEntry = s.GetNextEntry()) != null)
+            ZipFile zipFile;
+            zipFile=new ZipFile(File.OpenRead(args[0]));
+            //生成解压目录   
+            string directoryName = Path.GetDirectoryName(args[1]);
+            Directory.CreateDirectory(directoryName);
+            int index = 0;
+            long count=zipFile.Count;
+            zipFile.Close();
+            pro.text = "0%";
+            ToolLoom.RunAsync(() =>
             {
-                string directoryName = Path.GetDirectoryName(args[1]);
-                string fileName = Path.GetFileName(theEntry.Name);
-                //生成解压目录   
-                Directory.CreateDirectory(directoryName);
-                if (fileName != String.Empty)
+                while ((theEntry = s.GetNextEntry()) != null)
                 {
-                    //解压文件到指定的目录   
-                    FileStream streamWriter = File.Create(args[1] +fileName);
-                    int size = 2048;
-                    byte[] data = new byte[2048];
-                    while (true)
+                    string fileName = Path.GetFileName(theEntry.Name);
+                    ToolLoom.QueueOnMainThread(() => { message.text = "解压中"; });
+                    if (fileName != String.Empty)
                     {
-                        size = s.Read(data, 0, data.Length);
-                        if (size > 0)
+                        //解压文件到指定的目录   
+                        FileStream streamWriter = File.Create(args[1] + fileName);
+                        byte[] data = new byte[bufferSize];
+                        int offset = 0;
+                        while (true)
                         {
-                            streamWriter.Write(data, 0, size);
+                            int size = s.Read(data, 0, data.Length);
+                            if (size > 0)
+                            {
+                                streamWriter.Write(data, 0, size);
+                                offset += size;
+                                float value = Convert.ToSingle((offset * 1f / s.Length * 1f).ToString("f2"));
+                                ToolLoom.QueueOnMainThread(() => { progress.value = value; });
+                            }
+                            else
+                            {
+                                break;
+                            }
                         }
-                        else
-                        {
-                            break;
-                        }
+
+                        streamWriter.Close();
                     }
-                    streamWriter.Close();
+                    index++;
+                    ToolLoom.QueueOnMainThread(() =>
+                    {
+                        pro.text =((index*1f/count*1f)*100f).ToString("f1")+"%";
+                    });
                 }
-            }
-            s.Close();
+
+                s.Close();
+                ToolLoom.QueueOnMainThread(() =>
+                {
+                    progress.value = 1;
+                    message.text = "解压完成";
+                });
+                Debug.Log($"{"解压完成"}");
+            });
         }
     }
     #endregion
