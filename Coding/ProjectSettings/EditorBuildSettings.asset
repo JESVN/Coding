@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Fantasy/21UnityIngameDebugConsole/UnityIngameDebugConsole.unity
-    guid: 2324a87a1284c3543a5c11d7e103dcef
+    path: Assets/Scenes/Fantasy/22Timer/TimerExampleScene.unity
+    guid: bb52da00b87bc3e42945f448fc4c4a39
   m_configObjects: {}
