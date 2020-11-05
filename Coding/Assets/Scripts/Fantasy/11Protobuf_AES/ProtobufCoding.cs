@@ -52,7 +52,6 @@ public class ProtobufCoding:MonoSingleton<ProtobufCoding>
 
     void Update()
     {
-        Debug.Log($"{"[log]"}");
         if (Input.GetKeyDown(KeyCode.Space))
         {
             AESED(EAes.Encryption);
