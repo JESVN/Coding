@@ -52,23 +52,50 @@ public class TransparentWindow : MonoBehaviour
 
     private IntPtr _hwnd;
 
+//     void Start()
+//     {
+// #if !UNITY_EDITOR
+//     MARGINS margins = new MARGINS() { cxLeftWidth = -1 };
+//     _hwnd = GetActiveWindow();
+//     int fWidth = Screen.width;
+//     int fHeight = Screen.height;
+//         SetWindowLong(_hwnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+//         //SetWindowLong(_hwnd, GWL_EXSTYLE, WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TRANSPARENT);//鼠标穿透
+//         DwmExtendFrameIntoClientArea(_hwnd, ref margins);
+//         SetWindowPos(_hwnd, HWND_TOPMOST, 0, 0, fWidth, fHeight, SWP_FRAMECHANGED | SWP_SHOWWINDOW); 
+//         ShowWindowAsync(_hwnd, 3); //Forces window to show in case of unresponsive app    // SW_SHOWMAXIMIZED(3)
+// #endif
+//     }
     void Start()
     {
-#if !UNITY_EDITOR
-    MARGINS margins = new MARGINS() { cxLeftWidth = -1 };
-    _hwnd = GetActiveWindow();
-    int fWidth = Screen.width;
-    int fHeight = Screen.height;
+        Set(1);
+    }
+    void OnRenderImage(RenderTexture from, RenderTexture to)
+    {
+        Graphics.Blit(from, to, m_Material);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Set(-1);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Set(1);
+        }
+    }
+    void Set(int cxLeftWidthValue)
+    {
+        MARGINS margins = new MARGINS() { cxLeftWidth = cxLeftWidthValue };
+        _hwnd = GetActiveWindow();
+        int fWidth = Screen.width;
+        int fHeight = Screen.height;
         SetWindowLong(_hwnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
         //SetWindowLong(_hwnd, GWL_EXSTYLE, WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TRANSPARENT);//鼠标穿透
         DwmExtendFrameIntoClientArea(_hwnd, ref margins);
         SetWindowPos(_hwnd, HWND_TOPMOST, 0, 0, fWidth, fHeight, SWP_FRAMECHANGED | SWP_SHOWWINDOW); 
         ShowWindowAsync(_hwnd, 3); //Forces window to show in case of unresponsive app    // SW_SHOWMAXIMIZED(3)
-#endif
-    }
-
-    void OnRenderImage(RenderTexture from, RenderTexture to)
-    {
-        Graphics.Blit(from, to, m_Material);
     }
 }
