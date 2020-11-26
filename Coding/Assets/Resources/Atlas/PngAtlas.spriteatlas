@@ -43,7 +43,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 82e07072a5a9c8a428124c4b3f17c12f, type: 3}
-    totalSpriteSurfaceArea: 65719907
+    totalSpriteSurfaceArea: 55612003
     bindAsDefault: 0
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -92,7 +92,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 19af3a31d5916244d8f1df9ce243ac74, type: 3}
   - {fileID: 21300000, guid: 8e5d2541b5f144e4384cc832f63724ef, type: 3}
   - {fileID: 21300000, guid: a3bb4541175991d4eb7a01814fc59e6e, type: 3}
-  - {fileID: 21300000, guid: 880332514c457bd439277f0c687b059e, type: 3}
   - {fileID: 21300000, guid: 67e79261017f9a64fab85c115a829531, type: 3}
   - {fileID: 21300000, guid: 226f166161811af408e866e31d1279fc, type: 3}
   - {fileID: 21300000, guid: a7b9a27171f151247b46c2f2bfa241db, type: 3}
@@ -367,7 +366,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b51c5867d2b1c4746b09cdaf7f29074e, type: 3}
   - {fileID: 21300000, guid: e0540c67b678e2b40991f004e72a4e21, type: 3}
   - {fileID: 21300000, guid: a0fbf077f14103b45a12586ea86d3c9c, type: 3}
-  - {fileID: 21300000, guid: 4b5ea27731d1a3642a23ab87f853232a, type: 3}
   - {fileID: 21300000, guid: 63e757777adbe934dae703a8264ed91b, type: 3}
   - {fileID: 21300000, guid: 5198bb77fbfa86f4fa82f166a89bb7ee, type: 3}
   - {fileID: 21300000, guid: 3ba8bc777d062ea49b9191261400be45, type: 3}
@@ -566,7 +564,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4e33553c139538e419c5525903689244, type: 3}
   - {fileID: 21300000, guid: d4f3b73cda6ebe24099c096f54f08864, type: 3}
   - {fileID: 21300000, guid: 36ad5a3cdb5a6854081ea76cc3607bca, type: 3}
-  - {fileID: 21300000, guid: 3cf2ca4c5e1261146865c72a0f71a6c8, type: 3}
   - {fileID: 21300000, guid: 4cd6c56cc46499b44a09fe086f319cc1, type: 3}
   - {fileID: 21300000, guid: 7360f76c4439e7f42a49ac63eae65dba, type: 3}
   - {fileID: 21300000, guid: 911a027c71b1ba64cb424981f80ec8be, type: 3}
@@ -757,7 +754,6 @@ SpriteAtlas:
   - Icon_Skill1
   - Btn_left_h
   - Radio1_null
-  - background4_v2
   - Icon_Coins
   - Circle_Progress
   - Panel1
@@ -1032,7 +1028,6 @@ SpriteAtlas:
   - Icon_Skill1
   - Icon_Setting
   - Lights1
-  - background6_v2
   - Btn_OK_h
   - textbox03
   - Icon_YouWin1
@@ -1231,7 +1226,6 @@ SpriteAtlas:
   - Icon_Skill2
   - Slider1_Btn
   - Icon_Role4
-  - Btn_Back_h
   - Radio_select
   - loading-bar02_01
   - Btn_Level1_h
