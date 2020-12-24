@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Fantasy/15TransparentForm/TransparentForm.unity
-    guid: 2df4dbbce109faf4095df991541647af
+    path: Assets/Scenes/Fantasy/25InterfaceRealize/InterfaceRealize.unity
+    guid: ee26c7f4da12cf44ca2c6725c5529291
   m_configObjects: {}
